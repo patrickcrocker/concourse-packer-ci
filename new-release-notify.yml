@@ -1,0 +1,37 @@
+---
+jobs:
+  - name: build-concourse-ami
+    plan:
+      - get: concourse-release
+        trigger: true
+      - task: write-message
+        file: pipeline-tasks/tasks/
+      # - put: slack-alert
+      #   params:
+      #     text: |
+      #       :tada: A new release of Concourse is available!
+
+resources:
+  - name: pipeline-tasks
+    type: git
+    source:
+      uri: {{cg-bootstrap-concourse-ci-git-url}}
+      branch: {{cg-bootstrap-concourse-ci-git-branch}}
+
+  - name: concourse-release
+    type: github-release
+    source:
+      user: concourse
+      repository: concourse
+
+  - name: slack-alert
+    type: slack-notification
+    source:
+      url: {{slack-webhook-url}}
+
+resource_types:
+  - name: slack-notification
+    type: docker-image
+    source:
+      repository: cfcommunity/slack-notification-resource
+      tag: latest

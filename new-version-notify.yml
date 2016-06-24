@@ -1,0 +1,36 @@
+---
+jobs:
+  - name: build-concourse-ami
+    plan:
+      - get: concourse-release
+        trigger: true
+      - task: write-message
+      - put: slack-alert
+        params:
+          text: |
+            :tada: A new release of Concourse is available!
+
+
+resources:
+  - name: concourse-release
+    type: github-release
+    source:
+      user: concourse
+      repository: concourse
+
+  - name: concourse-release
+    type: bosh-io-release
+    source:
+      repository: concourse/concourse
+
+  - name: slack-alert
+    type: slack-notification
+    source:
+      url: {{slack-webhook-url}}
+
+resource_types:
+  - name: slack-notification
+    type: docker-image
+    source:
+      repository: cfcommunity/slack-notification-resource
+      tag: latest

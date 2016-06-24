@@ -3,6 +3,8 @@
 
 set -e
 
+ls -al concourse-release
+
 #
 # A little environment validation
 #

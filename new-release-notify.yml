@@ -15,8 +15,8 @@ resources:
   - name: pipeline-tasks
     type: git
     source:
-      uri: {{cg-bootstrap-concourse-ci-git-url}}
-      branch: {{cg-bootstrap-concourse-ci-git-branch}}
+      uri: git://10.0.2.2/cg-bootstrap-concourse-ci
+      branch: master
 
   - name: concourse-release
     type: github-release
@@ -24,14 +24,14 @@ resources:
       user: concourse
       repository: concourse
 
-  - name: slack-alert
-    type: slack-notification
-    source:
-      url: {{slack-webhook-url}}
+  # - name: slack-alert
+  #   type: slack-notification
+  #   source:
+  #     url: {{slack-webhook-url}}
 
-resource_types:
-  - name: slack-notification
-    type: docker-image
-    source:
-      repository: cfcommunity/slack-notification-resource
-      tag: latest
+# resource_types:
+#   - name: slack-notification
+#     type: docker-image
+#     source:
+#       repository: cfcommunity/slack-notification-resource
+#       tag: latest

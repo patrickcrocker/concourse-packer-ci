@@ -23,15 +23,3 @@ resources:
     source:
       user: concourse
       repository: concourse
-
-  # - name: slack-alert
-  #   type: slack-notification
-  #   source:
-  #     url: {{slack-webhook-url}}
-
-# resource_types:
-#   - name: slack-notification
-#     type: docker-image
-#     source:
-#       repository: cfcommunity/slack-notification-resource
-#       tag: latest

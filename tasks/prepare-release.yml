@@ -8,6 +8,7 @@ image_resource:
 
 inputs:
   - name: concourse-packer
+  - name: concourse-packer-ci
   - name: concourse-release
 
 outputs:

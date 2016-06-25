@@ -1,0 +1,21 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: busybox
+
+inputs:
+  - name: concourse-packer
+  - name: concourse-release
+
+outputs:
+  - name: prepare-release
+
+run:
+  path: concourse-packer-ci/tasks/prepare-release.sh
+
+params:
+  CONTENT:
+  FILE_NAME:

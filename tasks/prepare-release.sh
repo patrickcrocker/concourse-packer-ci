@@ -13,8 +13,10 @@ cp concourse-release/concourse_linux_amd64 prepare-release/cookbooks/concourse/f
 VERSION=$(basename concourse-*.tar.gz .tar.gz | awk -F"-" '{ print $2 }')
 
 # append the version to the base config
-if [ ! -z "$CONFIG" ]; then
-  CONTENT="$CONFIG, \"concourse_version\": \"$VERSION\" "
+if [ -z "$CONFIG" ]; then
+  CONFIG="$VERSION"
+else
+  CONFIG="$CONFIG, \"concourse_version\": \"$VERSION\" "
 fi
 
 cat <<EOF > prepare-release/secrets.json

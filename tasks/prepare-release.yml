@@ -15,7 +15,6 @@ outputs:
   - name: prepare-release
 
 params:
-  FILE_NAME:
   CONFIG:
 
 run:

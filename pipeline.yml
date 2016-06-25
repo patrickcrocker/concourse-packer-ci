@@ -15,10 +15,10 @@ jobs:
     params:
       CONFIG: |
         "aws_access_key": {{aws-access-key-id}}, "aws_secret_key": {{aws-secret-access-key}}, "aws_region": {{aws-default-region}}
-  - put: packer-aws
-    params:
-      template: prepare-release/bootstrap_concourse.json
-      var_file: prepare-release/secrets.json
+  # - put: packer-aws
+  #   params:
+  #     template: prepare-release/bootstrap_concourse.json
+  #     var_file: prepare-release/secrets.json
 
 resources:
 - name: concourse-packer

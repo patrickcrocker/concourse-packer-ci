@@ -17,6 +17,6 @@ if [ ! -z "$CONFIG" ]; then
   CONTENT="$CONFIG, \"concourse_version\": \"$VERSION\" "
 fi
 
-cat <<EOF > prepare-secrets/secrets.json
+cat <<EOF > prepare-release/secrets.json
 { $CONFIG }
 EOF

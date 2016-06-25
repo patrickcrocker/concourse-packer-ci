@@ -7,20 +7,18 @@ jobs:
     - get: concourse-packer-ci
     - get: concourse-release
       params:
+        include_source_tarball: true
         globs:
           - concourse_linux_amd64
   - task: prepare-release
     file: concourse-packer-ci/tasks/prepare-release.yml
-  - task: prepare-secrets
-    file: concourse-packer-ci/tasks/prepare-secrets.yml
     params:
-      FILE_NAME: prepare-secrets/secrets.json
-      CONTENT: |
-        {"aws_access_key": {{aws-access-key-id}}, "aws_secret_key": {{aws-secret-access-key}}, "aws_region": {{aws-default-region}}}
+      CONFIG: |
+        "aws_access_key": {{aws-access-key-id}}, "aws_secret_key": {{aws-secret-access-key}}, "aws_region": {{aws-default-region}}
   - put: packer-aws
     params:
       template: prepare-release/bootstrap_concourse.json
-      var_file: prepare-secrets/secrets.json
+      var_file: prepare-release/secrets.json
 
 resources:
 - name: concourse-packer

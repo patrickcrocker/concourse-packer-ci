@@ -14,9 +14,9 @@ inputs:
 outputs:
   - name: prepare-release
 
+params:
+  FILE_NAME:
+  CONFIG:
+
 run:
   path: concourse-packer-ci/tasks/prepare-release.sh
-
-params:
-  CONTENT:
-  FILE_NAME:

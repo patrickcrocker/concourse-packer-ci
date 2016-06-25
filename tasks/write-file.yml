@@ -16,6 +16,8 @@ outputs:
 
 run:
   path: ls
+  args:
+    - concourse-packer-ci/tasks/write-file.sh
   # path: concourse-packer-ci/tasks/write-file.sh
 
 params:

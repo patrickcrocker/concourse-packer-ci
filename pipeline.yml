@@ -10,10 +10,10 @@ jobs:
       params:
         globs:
           - concourse_linux_amd64
-    - get: pipeline
+    - get: concourse-packer-ci
       trigger: true
-  - task: generate-var-file
-    file: pipeline/tasks/write-file.yml
+  - task: write-file
+    file: concourse-packer-ci/tasks/write-file.yml
     params:
       FILE_NAME: write-file/secrets.json
       CONTENT: |
@@ -30,7 +30,7 @@ resources:
     uri: {{concourse-packer-git-url}}
     branch: {{concourse-packer-git-branch}}
 
-- name: pipeline
+- name: concourse-packer-ci
   type: git
   source:
     uri: {{concourse-packer-ci-git-url}}

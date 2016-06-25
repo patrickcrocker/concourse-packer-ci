@@ -7,14 +7,14 @@ image_resource:
     repository: busybox
 
 inputs:
-  - name: pipeline
+  - name: concourse-packer-ci
   - name: concourse-release
 
 outputs:
   - name: write-file
 
 run:
-  path: pipeline/tasks/write-file.sh
+  path: concourse-packer-ci/tasks/write-file.sh
 
 params:
   CONTENT:

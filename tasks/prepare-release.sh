@@ -1,5 +1,4 @@
-#!/bin/ash
-# vim: set ft=sh
+#!/bin/bash
 
 set -e
 
@@ -9,8 +8,8 @@ cp -a concourse-packer/. prepare-release/
 # copy the concourse binary to the task output
 cp concourse-release/concourse_linux_amd64 prepare-release/cookbooks/concourse/files/.
 
-# get version from the source download (the only reason we downloaded it)
-VERSION=$(basename concourse-*.tar.gz .tar.gz | awk -F"-" '{ print $2 }')
+# get version from the version file
+VERSION=$(cat concourse-release/version | awk -F"/" '{ print $1 }')
 
 # append the version to the base config
 if [ -z "$CONFIG" ]; then

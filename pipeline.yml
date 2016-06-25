@@ -1,0 +1,56 @@
+---
+jobs:
+- name: build
+  plan:
+  - aggregate:
+    - get: concourse-packer
+      trigger: true
+    - get: concourse-release
+      trigger: true
+      params:
+        globs:
+          - concourse_linux_amd64
+    - get: pipeline
+      trigger: true
+  - task: generate-var-file
+    file: pipeline/tasks/write-file.yml
+    params:
+      FILE_NAME: write-file/secrets.json
+      CONTENT: |
+        {"aws_access_key": {{aws-access-key-id}}, "aws_secret_key": {{aws-secret-access-key}}, "aws_region": {{aws-default-region}}}
+  - put: packer-aws
+    params:
+      template: concourse-packer/bootstrap_concourse.json
+      var_file: write-file/secrets.json
+
+resources:
+- name: concourse-packer
+  type: git
+  source:
+    uri: {{concourse-packer-git-url}}
+    branch: {{concourse-packer-git-branch}}
+
+- name: pipeline
+  type: git
+  source:
+    uri: {{concourse-packer-ci-git-url}}
+    branch: {{concourse-packer-ci-git-branch}}
+
+- name: concourse-release
+  type: github-release
+  source:
+    user: concourse
+    repository: concourse
+
+- name: packer-aws
+  type: packer
+  source:
+    aws_access_key_id: {{aws-access-key-id}}
+    aws_secret_access_key: {{aws-secret-access-key}}
+    region: {{aws-default-region}}
+
+resource_types:
+- name: packer
+  type: docker-image
+  source:
+    repository: jdub/packer-resource

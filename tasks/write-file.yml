@@ -15,7 +15,8 @@ outputs:
   - name: write-file
 
 run:
-  path: concourse-packer-ci/tasks/write-file.sh
+  path: ls
+  # path: concourse-packer-ci/tasks/write-file.sh
 
 params:
   CONTENT:

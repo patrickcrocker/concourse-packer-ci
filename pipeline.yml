@@ -4,14 +4,11 @@ jobs:
   plan:
   - aggregate:
     - get: concourse-packer
-      trigger: true
+    - get: concourse-packer-ci
     - get: concourse-release
-      trigger: true
       params:
         globs:
           - concourse_linux_amd64
-    - get: concourse-packer-ci
-      trigger: true
   - task: write-file
     file: concourse-packer-ci/tasks/write-file.yml
     params:
